@@ -6,8 +6,8 @@ function App() {
   const [imageWidth, setImageWidth] = useState(600);
 
   return (
-    <div className="flex flex-col justify-center items-center mt-20 gap-4">
-      <div className="flex flex-col gap-4 border p-4">
+    <div className="flex flex-col items-center p-8 gap-4 bg-stone-100 h-screen text-stone-800">
+      <div className="flex flex-col gap-4 border border-stone-200 p-4">
         <label className="flex justify-between gap-4">
           <p>Dither density: {ditherWidth}px</p>
           <input
