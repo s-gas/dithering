@@ -2,6 +2,8 @@ import { useRef, useEffect } from 'react'
 import dither from '../utils/dithering'
 
 const DitheredImage = ({src, ditherWidth, imageWidth}) => {
+  if (src === null) return null;
+
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -15,7 +17,7 @@ const DitheredImage = ({src, ditherWidth, imageWidth}) => {
       dither(ctx, canvas.width, canvas.height);
     }
     img.src = src;
-  }, [ditherWidth, imageWidth])
+  }, [src, ditherWidth, imageWidth])
 
   return (
     <canvas

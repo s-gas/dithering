@@ -1,36 +1,17 @@
 import { useState } from 'react'
 import DitheredImage from './components/DitheredImage'
+import Inputs from './components/Inputs'
 
 function App() {
+  const [src, setSrc] = useState(null);
   const [ditherWidth, setDitherWidth] = useState(600);
   const [imageWidth, setImageWidth] = useState(600);
 
+
   return (
     <div className="flex flex-col items-center p-8 gap-4 bg-stone-100 h-screen text-stone-800">
-      <div className="flex flex-col gap-4 border border-stone-200 p-4">
-        <label className="flex justify-between gap-4">
-          <p>Dither density: {ditherWidth}px</p>
-          <input
-            type="range"
-            min={200}
-            max={1200}
-            value={ditherWidth}
-            onChange={(e) => setDitherWidth(Number(e.target.value))}
-          />
-        </label>
-
-        <label className="flex justify-between gap-4">
-          <p>Image width: {imageWidth}px</p>
-          <input
-            type="range"
-            min={200}
-            max={1200}
-            value={imageWidth}
-            onChange={(e) => setImageWidth(Number(e.target.value))}
-          />
-        </label>
-      </div>
-      <DitheredImage src="/pic.jpg" ditherWidth={ditherWidth} imageWidth={imageWidth}/>
+      <Inputs ditherWidth={ditherWidth} imageWidth={imageWidth} setDitherWidth={setDitherWidth} setImageWidth={setImageWidth} setSrc={setSrc}/>
+      <DitheredImage src={src} ditherWidth={ditherWidth} imageWidth={imageWidth} />
     </div>
   )
 }

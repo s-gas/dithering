@@ -1,6 +1,6 @@
 # dithering
 
-React web app that applies dithering to an image, using a 2-color palette.
+React web app that applies dithering to an image.
 
 ## How to run
 

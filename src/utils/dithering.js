@@ -76,7 +76,7 @@ const dither = (ctx, width, height) => {
 
   const rgbArray = getRgbValues(data.data, data.width, data.height);
 
-  const palette = [[48, 0, 255],[217, 217, 217]];
+  const palette = [[48, 0, 255],[217, 217, 217], [104, 72, 241], [160, 145, 228]];
 
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
