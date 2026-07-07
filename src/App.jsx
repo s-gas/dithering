@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react'
+import getRgbValues from './utils/rgbArray'
 
 function App() {
   const canvasRef = useRef(null);
@@ -11,6 +12,8 @@ function App() {
       canvas.width = 600;
       canvas.height = img.height * canvas.width / img.width;
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      const rgbArray = getRgbValues(ctx, canvas.width, canvas.height);
+      console.log(rgbArray);
     }
     img.src = "/pic.jpg";
   }, [])
