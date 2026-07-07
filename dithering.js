@@ -1,7 +1,6 @@
 /** 
   * This function takes an array containing R, G, B, A values
-  * and creates a Float32Array that stores only the R, G, B values
-  * of the original array by discarding the A values.
+  * and creates a Float32Array that stores only the R, G, B values of the original array by discarding the A values.
   *
   * @param {Uint8ClampedArray} alphaArray - Array of R, G, B, A
   * @param {number} width - width of the image
@@ -81,41 +80,39 @@ const dither = (ctx, width, height) => {
   for (let y = 0; y < height; y++) {
     for (let x = 0; x < width; x++) {
       const i = ((y * width) + x) * 3;
-      
+
       const oldR = rgbArray[i];
       const oldG = rgbArray[i + 1];
       const oldB = rgbArray[i + 2];
 
-      const closest = findClosestColor(oldR, oldG, oldB, palette);
+      const [newR, newG, newB] = findClosestColor(oldR, oldG, oldB, palette);
 
-      rgbArray[i] = closest[0];
-      rgbArray[i + 1] = closest[1];
-      rgbArray[i + 2] = closest[2];
+      rgbArray[i] = newR;
+      rgbArray[i + 1] = newG;
+      rgbArray[i + 2] = newB;
 
-      const errR = oldR - closest[0];
-      const errG = oldG - closest[1];
-      const errB = oldB - closest[2];
+      const noiseR = oldR - newR;
+      const noiseG = oldG - newG;
+      const noiseB = oldB - newB;
 
-      const diffuse = (dx, dy, factor) => {
+      const spreadNoise = (dx, dy, factor) => {
         const nx = x + dx;
         const ny = y + dy;
         if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
-          const ni = (ny * width + nx) * 3;
-          rgbArray[ni] += errR * factor;
-          rgbArray[ni + 1] += errG * factor;
-          rgbArray[ni + 2] += errB * factor;
+          const ni = ((ny * width) + nx) * 3;
+          rgbArray[ni]     += noiseR * factor;
+          rgbArray[ni + 1] += noiseG * factor;
+          rgbArray[ni + 2] += noiseB * factor;
         }
       };
 
-      diffuse(1, 0, 7 / 16);
-      diffuse(-1, 1, 3 / 16);
-      diffuse(0, 1, 5 / 16);
-      diffuse(1, 1, 1 / 16);
+      spreadNoise(1, 0, 7 / 16); // right
+      spreadNoise(-1, 1, 3 / 16); // bottom-left
+      spreadNoise(0, 1, 5 / 16); // bottom
+      spreadNoise(1, 1, 1 / 16); // bottom-right
     }
   }
 
   copyBack(data.data, rgbArray, width, height);
   ctx.putImageData(data, 0, 0);
 }
-
-export default dither
