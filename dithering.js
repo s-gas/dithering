@@ -86,10 +86,4 @@ function autoDither(rgbArray, palette, width, height, targetStdDev = 60) {
   return contrast;
 }
 
-module.exports = {
-  measureContrast,
-  computeAutoContrast,
-  applyContrast,
-  bayer2x2,
-  autoDither,
-};
+module.exports = autoDither;

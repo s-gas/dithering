@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const sharp = require('sharp');
-const { autoDither } = require('./dithering');
+const autoDither = require('./dithering');
 
 const palette = [
   [48, 0, 255],
@@ -10,7 +10,10 @@ const palette = [
   [160, 145, 228], 
 ];
 
-async function ditherImage(inputPath, outputPath, ditherWidth = 300, targetStdDev = 60) {
+async function ditherImage(inputPath, outputPath) {
+  const ditherWidth = 400;
+  const targetStdDev = 60;
+
   const { data, info } = await sharp(inputPath)
     .resize(ditherWidth)
     .removeAlpha()
@@ -38,17 +41,14 @@ async function ditherImage(inputPath, outputPath, ditherWidth = 300, targetStdDe
   console.log(`Dithered image saved to ${outputPath} (${width}x${height})`);
 }
 
-const [, , inputPath, outputPath, ditherWidthArg, targetStdDevArg] = process.argv;
+const [, , inputPath, outputPath] = process.argv;
 
 if (!inputPath || !outputPath) {
-  console.error('Usage: node cli.js <input> <output> [ditherWidth] [targetStdDev]');
+  console.error('Usage: node cli.js <input> <output>');
   process.exit(1);
 }
 
-const ditherWidth = ditherWidthArg ? Number(ditherWidthArg) : 300;
-const targetStdDev = targetStdDevArg ? Number(targetStdDevArg) : 60;
-
-ditherImage(inputPath, outputPath, ditherWidth, targetStdDev).catch((err) => {
+ditherImage(inputPath, outputPath).catch((err) => {
   console.error('Error dithering image:', err);
   process.exit(1);
 });
