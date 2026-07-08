@@ -1,5 +1,7 @@
 # dithering
 
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+
 A Node.js command-line tool that reads an image, adjusts its
 contrast, and applies Bayer 2x2 (ordered) dithering with a fixed palette.
 
