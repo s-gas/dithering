@@ -3,6 +3,8 @@
 const sharp = require('sharp');
 const autoDither = require('./dithering');
 
+const ditherWidth = 300;
+const targetStdDev = 60;
 const palette = [
   [48, 0, 255],
   [217, 217, 217],
@@ -11,9 +13,6 @@ const palette = [
 ];
 
 async function ditherImage(inputPath, outputPath) {
-  const ditherWidth = 400;
-  const targetStdDev = 60;
-
   const { data, info } = await sharp(inputPath)
     .resize(ditherWidth)
     .removeAlpha()
